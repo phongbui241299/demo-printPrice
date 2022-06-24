@@ -348,26 +348,55 @@ if ( ! function_exists( 'storefront_page_content' ) ) {
 	 */
 	function storefront_page_content() {
 		?>
-	<div id="printable">
-	<div class="entry-content">
-				<div id="test">
-					<?php the_content(); ?>
-				</div>
-				<?php
-					wp_link_pages(
-						array(
-							'before' => '<div class="page-links">' . __( 'Pages:', 'storefront' ),
-							'after'  => '</div>',
-						)
-					);
-				?>
+			<div class="entry-content">
+							<?php the_content(); ?>
+						</div>
+						<?php
+							wp_link_pages(
+								array(
+									'before' => '<div class="page-links">' . __( 'Pages:', 'storefront' ),
+									'after'  => '</div>',
+								)
+						);
+					?>
 			</div>
+		<?php
+		 	global $woocommerce;
+			 $items = $woocommerce->cart->get_cart();
+		 		?><div id="printable">
+					 <h1>CÔNG TY CỔ PHẦN ĐẦU TƯ VÀ CÔNG NGHỆ NGUYỄN VŨ</h1>
+					 <p>V.P Cần Thơ: 174/12 Lê Bình, P. Hưng Lợi, Q. Ninh Kiều</p>
+					 <p>Showroom Cần Thơ: 47C Đường 3/2, Q. Ninh Kiều</p>
+					 <p>Hotline:  1900.571.269 - 0292.2244.456</p>
+					 <p>Website: https://nguyenvu.store</p>
+					 <h2>BÁO GIÁ</h2>
+						<div class="">
+							<?php
+							$user = wp_get_current_user();
+							//var_dump($user);
+							echo $user->user_email;
+
+							?>
+						</div>
+				 <table><?php
+					foreach($items as $item => $values) { 
+						$_product =  wc_get_product( $values['data']->get_id()); 
+						$price = get_post_meta($values['product_id'] , '_price', true);
+						?>
+						<tr>
+							<td><?=$_product->get_title();?></td>
+							<td><?= $values['quantity'] ?></td>
+							<td><?= wc_price($price) ?></td>
+						</tr>
+						<?php
+					} 
+				?> </table>
+			<div><?= wc_price(WC()->cart->cart_contents_total)?></div>
     	</div>
-	</div>
-	<button onClick="printToPDF();">
- 		 Print to PDF
-	</button>
-		
+
+		<button onClick="printToPDF();">
+ 		 	Print to PDF
+		</button>
 		<?php
 	}
 }
