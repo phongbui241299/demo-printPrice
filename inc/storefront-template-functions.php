@@ -372,10 +372,9 @@ if ( ! function_exists( 'storefront_page_content' ) ) {
 					 <h2>BÁO GIÁ</h2>
 						<div class="">
 							<?php
-							$user = wp_get_current_user();
-							//var_dump($user);
-							echo $user->user_email;
-
+								$user = wp_get_current_user();
+								//var_dump($user);
+								echo $user->user_email;
 							?>
 						</div>
 				 <table><?php
